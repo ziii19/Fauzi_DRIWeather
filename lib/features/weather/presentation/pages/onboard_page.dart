@@ -3,6 +3,8 @@ import 'package:fauzi_driweather/core/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'home_page.dart';
+
 class OnboardPage extends StatelessWidget {
   const OnboardPage({super.key});
 
@@ -78,7 +80,13 @@ class OnboardPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 23),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        HomePage.route(),
+                        (route) => false,
+                      );
+                    },
                     child: const Text('Get Started'),
                   ),
                   const SizedBox(height: 141),
