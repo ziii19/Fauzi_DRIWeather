@@ -1,6 +1,8 @@
+# @format
+
 name: fauzi_driweather
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -9,11 +11,69 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.6
+  flutter_svg: ^2.0.10+1
+  geolocator: ^13.0.1
+  google_maps_flutter: ^2.9.0
+  http: ^1.2.2
 
 dev_dependencies:
+  flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/svg/
+
+  fonts:
+    - family: Overpass
+      fonts:
+        - asset: assets/fonts/Overpass-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/Overpass-ThinItalic.ttf
+          weight: 100
+          style: italic
+        - asset: assets/fonts/Overpass-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/Overpass-ExtraLightItalic.ttf
+          weight: 200
+          style: italic
+        - asset: assets/fonts/Overpass-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Overpass-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/Overpass-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Overpass-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/Overpass-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Overpass-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/Overpass-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Overpass-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/Overpass-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Overpass-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/Overpass-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Overpass-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/Overpass-Black.ttf
+          weight: 900
+        - asset: assets/fonts/Overpass-BlackItalic.ttf
+          weight: 900
+          style: italic
