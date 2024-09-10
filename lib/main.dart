@@ -1,4 +1,3 @@
-import 'package:fauzi_driweather/core/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
 import 'features/weather/presentation/pages/onboard_page.dart';
@@ -19,7 +18,10 @@ class MainApp extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
-            padding: const EdgeInsets.symmetric(vertical: 20),
+            padding: const EdgeInsets.symmetric(
+              vertical: 20,
+              horizontal: 30,
+            ),
             textStyle: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w400,
