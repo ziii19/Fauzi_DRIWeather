@@ -52,7 +52,7 @@ class OnboardPage extends StatelessWidget {
               child: SvgPicture.asset(SvgAssets.cloud),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 54.0),
+              padding: const EdgeInsets.symmetric(horizontal: 35.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
