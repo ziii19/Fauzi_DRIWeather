@@ -1,113 +1,107 @@
 import 'package:weather_icons/weather_icons.dart';
 
+Map<int, Map<String, dynamic>> weatherData = {
+  0: {
+    'icon': WeatherIcons.day_cloudy,
+    'description': 'Unknown',
+  },
+  1000: {
+    'icon': WeatherIcons.day_sunny,
+    'description': 'Clear',
+  },
+  1100: {
+    'icon': WeatherIcons.day_sunny_overcast,
+    'description': 'Mostly Clear',
+  },
+  1101: {
+    'icon': WeatherIcons.day_cloudy,
+    'description': 'Partly Cloudy',
+  },
+  1102: {
+    'icon': WeatherIcons.cloudy,
+    'description': 'Cloudy',
+  },
+  1001: {
+    'icon': WeatherIcons.cloudy,
+    'description': 'Cloudy',
+  },
+  2000: {
+    'icon': WeatherIcons.fog,
+    'description': 'Fog',
+  },
+  2100: {
+    'icon': WeatherIcons.day_fog,
+    'description': 'Light Fog',
+  },
+  4000: {
+    'icon': WeatherIcons.sprinkle,
+    'description': 'Drizzle',
+  },
+  4200: {
+    'icon': WeatherIcons.showers,
+    'description': 'Light Rain',
+  },
+  4001: {
+    'icon': WeatherIcons.rain,
+    'description': 'Rain',
+  },
+  4201: {
+    'icon': WeatherIcons.rain,
+    'description': 'Heavy Rain',
+  },
+  5000: {
+    'icon': WeatherIcons.snow,
+    'description': 'Snow',
+  },
+  5001: {
+    'icon': WeatherIcons.snowflake_cold,
+    'description': 'Flurries',
+  },
+  5100: {
+    'icon': WeatherIcons.day_snow,
+    'description': 'Light Snow',
+  },
+  5101: {
+    'icon': WeatherIcons.snow,
+    'description': 'Heavy Snow',
+  },
+  6000: {
+    'icon': WeatherIcons.sleet,
+    'description': 'Freezing Drizzle',
+  },
+  6001: {
+    'icon': WeatherIcons.rain_mix,
+    'description': 'Freezing Rain',
+  },
+  6200: {
+    'icon': WeatherIcons.day_sleet,
+    'description': 'Light Freezing Rain',
+  },
+  6201: {
+    'icon': WeatherIcons.sleet,
+    'description': 'Heavy Freezing Rain',
+  },
+  7000: {
+    'icon': WeatherIcons.sleet,
+    'description': 'Ice Pellets',
+  },
+  7101: {
+    'icon': WeatherIcons.sleet,
+    'description': 'Heavy Ice Pellets',
+  },
+  7102: {
+    'icon': WeatherIcons.day_sleet,
+    'description': 'Light Ice Pellets',
+  },
+  8000: {
+    'icon': WeatherIcons.thunderstorm,
+    'description': 'Thunderstorm',
+  },
+};
+
 Map<String, dynamic> getWeatherIconAndDescription(int weatherCode) {
-  switch (weatherCode) {
-    case 0:
-      return {
-        'icon': WeatherIcons.day_sunny,
-        'description': 'Clear sky',
-      };
-
-    case 1000:
-      return {
-        'icon': WeatherIcons.day_sunny_overcast,
-        'description': 'Mostly clear',
-      };
-
-    case 1101:
-      return {
-        'icon': WeatherIcons.day_cloudy,
-        'description': 'Partly cloudy',
-      };
-
-    case 1102:
-      return {
-        'icon': WeatherIcons.cloudy,
-        'description': 'Cloudy',
-      };
-
-    case 2000:
-      return {
-        'icon': WeatherIcons.fog,
-        'description': 'Fog',
-      };
-
-    case 2100:
-      return {
-        'icon': WeatherIcons.day_fog,
-        'description': 'Light fog',
-      };
-
-    case 4000:
-      return {
-        'icon': WeatherIcons.sprinkle,
-        'description': 'Drizzle',
-      };
-
-    case 4200:
-      return {
-        'icon': WeatherIcons.showers,
-        'description': 'Light rain',
-      };
-
-    case 4001:
-      return {
-        'icon': WeatherIcons.rain,
-        'description': 'Rain',
-      };
-
-    case 4201:
-      return {
-        'icon': WeatherIcons.rain,
-        'description': 'Heavy rain',
-      };
-
-    case 5000:
-      return {
-        'icon': WeatherIcons.snow,
-        'description': 'Snow',
-      };
-
-    case 5100:
-      return {
-        'icon': WeatherIcons.day_snow,
-        'description': 'Light snow',
-      };
-
-    case 6000:
-      return {
-        'icon': WeatherIcons.sleet,
-        'description': 'Freezing drizzle',
-      };
-
-    case 7000:
-      return {
-        'icon': WeatherIcons.thunderstorm,
-        'description': 'Thunderstorm',
-      };
-
-    case 5101:
-      return {
-        'icon': WeatherIcons.snow,
-        'description': 'Heavy snow',
-      };
-
-    case 6200:
-      return {
-        'icon': WeatherIcons.day_sleet,
-        'description': 'Light sleet',
-      };
-
-    case 6201:
-      return {
-        'icon': WeatherIcons.sleet,
-        'description': 'Heavy sleet',
-      };
-
-    default:
-      return {
-        'icon': WeatherIcons.day_cloudy,
-        'description': 'Unknown',
-      };
-  }
+  return weatherData[weatherCode] ?? {
+    'icon': WeatherIcons.day_cloudy,
+    'description': 'Unknown',
+  };
 }
