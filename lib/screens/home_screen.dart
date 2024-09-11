@@ -134,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              formatDateMMMdd(weather.time),
+                              formatTimeMMMdd(weather.time),
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.white.withOpacity(0.9),
@@ -215,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                     Text(
-                                      '${weather.humidity}%',
+                                      '${weather.humidity.toInt()}%',
                                       style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
