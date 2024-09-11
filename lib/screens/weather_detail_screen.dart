@@ -5,9 +5,8 @@ import 'package:fauzi_driweather/screens/widgets/back_button.dart';
 import 'package:fauzi_driweather/screens/widgets/bg_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_icons/weather_icons.dart';
 
-import 'bloc/weather_bloc.dart';
+import 'blocs/weather/weather_bloc.dart';
 import 'widgets/weather_hourly.dart';
 import 'widgets/weather_next_day.dart';
 
@@ -94,24 +93,6 @@ class WeatherScreen extends StatelessWidget {
                             ),
                           )
                           .toList(),
-                      // const [
-                      //   WeatherNextDayItem(
-                      //       date: 'Sep, 14',
-                      //       temp: '22°',
-                      //       icon: WeatherIcons.day_cloudy_windy),
-                      //   WeatherNextDayItem(
-                      //       date: 'Sep, 15',
-                      //       temp: '34°',
-                      //       icon: WeatherIcons.day_cloudy_windy),
-                      //   WeatherNextDayItem(
-                      //       date: 'Sep, 16',
-                      //       temp: '27°',
-                      //       icon: WeatherIcons.day_cloudy_windy),
-                      //   WeatherNextDayItem(
-                      //       date: 'Sep, 17',
-                      //       temp: '32°',
-                      //       icon: WeatherIcons.day_cloudy_windy),
-                      // ],
                     ),
                   ),
                   const Row(

@@ -9,7 +9,6 @@ class WeatherApi {
     String url =
         'https://api.tomorrow.io/v4/weather/realtime?location=$lat,$lon&apikey=$_apiKey';
     final response = await http.get(Uri.parse(url));
-    print(response.body);
     if (response.statusCode == 200) {
       return WeatherModel.fromJson(json.decode(response.body)['data']);
     } else {
