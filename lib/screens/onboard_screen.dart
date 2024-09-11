@@ -6,6 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'home_screen.dart';
 
 class OnboardPage extends StatelessWidget {
+  static route() => MaterialPageRoute(
+        builder: (context) => const OnboardPage(),
+      );
   const OnboardPage({super.key});
 
   @override
