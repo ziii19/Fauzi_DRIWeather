@@ -1,7 +1,8 @@
+import 'package:fauzi_driweather/core/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'screens/blocs/cubit/location_cubit.dart';
+import 'screens/blocs/location/location_cubit.dart';
 import 'screens/blocs/weather/weather_bloc.dart';
 import 'screens/splash_screen.dart';
 
@@ -25,25 +26,7 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            padding: const EdgeInsets.symmetric(
-              vertical: 20,
-              horizontal: 30,
-            ),
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: Color(0xff444E72),
-            ),
-          ),
-        ),
-        fontFamily: 'Overpass',
-      ),
+      theme: AppTheme.lightTheme,
       home: const SplashScreen(),
     );
   }
