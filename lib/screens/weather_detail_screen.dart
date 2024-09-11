@@ -28,11 +28,11 @@ class WeatherScreen extends StatelessWidget {
                     child: WidgetBack(),
                   ),
                   const SizedBox(height: 50),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'Today',
                         style: TextStyle(
                           color: Colors.white,
@@ -41,8 +41,8 @@ class WeatherScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Sep, 12',
-                        style: TextStyle(
+                        formatTimeMMMdd(state.weather.time),
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                         ),
