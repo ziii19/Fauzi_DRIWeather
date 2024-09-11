@@ -1,4 +1,5 @@
 import 'package:fauzi_driweather/core/theme/theme.dart';
+import 'package:fauzi_driweather/screens/blocs/cubit/first_launch_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,6 +12,7 @@ void main() async {
     MultiBlocProvider(providers: [
       BlocProvider(create: (context) => WeatherBloc()),
       BlocProvider(create: (context) => LocationCubit()..getCurrentLocation()),
+      BlocProvider(create: (context) => FirstLaunchCubit()..checkFirstLaunch()),
     ], child: const MainApp()),
   );
 }

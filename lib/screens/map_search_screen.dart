@@ -1,10 +1,16 @@
 import 'dart:convert';
 import 'package:fauzi_driweather/core/theme/app_color.dart';
+import 'package:fauzi_driweather/core/utils/show_snackbar.dart';
+import 'package:fauzi_driweather/screens/blocs/location/location_cubit.dart';
+import 'package:fauzi_driweather/services/get_current_location.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
+
+import 'blocs/weather/weather_bloc.dart';
 
 class MapSearchScreen extends StatefulWidget {
   static route() => MaterialPageRoute(
@@ -29,42 +35,18 @@ class MapSearchScreenState extends State<MapSearchScreen> {
   }
 
   Future<void> _getCurrentLocation() async {
-    if (!await Geolocator.isLocationServiceEnabled()) {
-      _showError('Location services are disabled.');
-      return;
-    }
-
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        _showError('Location permissions are denied.');
-        return;
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      _showError(
-          'Location permissions are permanently denied, we cannot request permissions.');
-      return;
-    }
-
-    Position position = await Geolocator.getCurrentPosition();
+    Position position = await getUserLocation();
     _updateLocation(LatLng(position.latitude, position.longitude));
   }
 
   void _updateLocation(LatLng newLocation) {
     setState(() {
       _currentLocation = newLocation;
+      context
+          .read<LocationCubit>()
+          .setLocation(newLocation.latitude, newLocation.longitude);
     });
     _mapController.move(_currentLocation, 13.0);
-  }
-
-  void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(message),
-      backgroundColor: Colors.red,
-    ));
   }
 
   Future<List<Map<String, dynamic>>> _searchLocation(String query) async {
@@ -94,8 +76,15 @@ class MapSearchScreenState extends State<MapSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Scaffold(
+    return BlocListener<WeatherBloc, WeatherState>(
+      listener: (context, state) {
+        if (state is WeatherFailed) {
+          showSnackBar(context, state.error);
+        } else if (state is WeatherSuccess) {
+          Navigator.pop(context);
+        }
+      },
+      child: Scaffold(
         body: Stack(
           children: [
             FlutterMap(
@@ -138,9 +127,30 @@ class MapSearchScreenState extends State<MapSearchScreen> {
             ),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.check),
-          onPressed: () => Navigator.pop(context, _currentLocation),
+        floatingActionButton: Stack(
+          children: <Widget>[
+            Positioned(
+              bottom: 80.0,
+              right: 16.0,
+              child: FloatingActionButton(
+                heroTag: null,
+                child: const Icon(Icons.check),
+                onPressed: () => context.read<WeatherBloc>().add(
+                    GetRealtimWeather(
+                        lat: _currentLocation.latitude,
+                        lon: _currentLocation.longitude)),
+              ),
+            ),
+            Positioned(
+              bottom: 16.0,
+              right: 16.0,
+              child: FloatingActionButton(
+                heroTag: null,
+                child: const Icon(Icons.my_location),
+                onPressed: () => _getCurrentLocation(),
+              ),
+            ),
+          ],
         ),
       ),
     );

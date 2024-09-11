@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:fauzi_driweather/core/constants/svg_assets.dart';
 import 'package:fauzi_driweather/core/utils/date_format.dart';
+import 'package:fauzi_driweather/core/utils/show_snackbar.dart';
 import 'package:fauzi_driweather/core/utils/wind_speed_to_kmh.dart';
 import 'package:fauzi_driweather/screens/blocs/location/location_cubit.dart';
 import 'package:fauzi_driweather/screens/map_search_screen.dart';
@@ -56,8 +57,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: BlocBuilder<WeatherBloc, WeatherState>(
         builder: (context, state) {
-          if (state is WeatherLoading) {
-            return const Center(child: CircularProgressIndicator());
+          if (state is WeatherFailed) {
+            showErrorDialog(context, state.error);
           } else if (state is WeatherSuccess) {
             final weather = state.weather;
             return BgScaffold(
@@ -101,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                                         );
                                       },
                                     ),
-                                    const SizedBox(width: 20),
+                                    const SizedBox(width: 10),
                                     const Icon(
                                       Icons.keyboard_arrow_down_rounded,
                                       color: AppColor.white,

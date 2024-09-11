@@ -6,6 +6,7 @@ import 'package:fauzi_driweather/screens/widgets/bg_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../core/utils/show_snackbar.dart';
 import 'blocs/weather/weather_bloc.dart';
 import 'widgets/weather_hourly.dart';
 import 'widgets/weather_next_day.dart';
@@ -112,8 +113,10 @@ class WeatherScreen extends StatelessWidget {
                 ],
               ),
             );
+          } else if (state is WeatherFailed) {
+            showErrorDialog(context, state.error);
           }
-          return const Center(child: CircularProgressIndicator());
+          return const BgScaffold(child: SizedBox());
         },
       ),
     );
