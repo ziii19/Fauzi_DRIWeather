@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:fauzi_driweather/core/constants/svg_assets.dart';
 import 'package:fauzi_driweather/core/utils/date_format.dart';
 import 'package:fauzi_driweather/core/utils/wind_speed_to_kmh.dart';
+import 'package:fauzi_driweather/screens/blocs/cubit/location_cubit.dart';
 import 'package:fauzi_driweather/screens/map_search_screen.dart';
 import 'package:fauzi_driweather/screens/weather_detail_screen.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../core/constants/weather_switch.dart';
 import '../core/theme/app_color.dart';
-import 'bloc/weather_bloc.dart';
+import 'blocs/weather/weather_bloc.dart';
 import 'widgets/bg_scaffold.dart';
 import 'notification_sheet.dart';
 
@@ -78,13 +79,27 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     SvgPicture.asset(SvgAssets.map),
                                     const SizedBox(width: 20),
-                                    const Text(
-                                      'Surabaya',
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColor.white,
-                                      ),
+                                    BlocBuilder<LocationCubit, LocationState>(
+                                      builder: (context, state) {
+                                        if (state is LocationSuccess) {
+                                          return Text(
+                                            state.locationName,
+                                            style: const TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColor.white,
+                                            ),
+                                          );
+                                        }
+                                        return const Text(
+                                          'Surabaya',
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColor.white,
+                                          ),
+                                        );
+                                      },
                                     ),
                                     const SizedBox(width: 20),
                                     const Icon(
