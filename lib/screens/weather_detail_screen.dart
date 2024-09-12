@@ -54,11 +54,16 @@ class WeatherScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: state.weatherHourly
-                          .map((e) => WeatherHourlyItem(
+                          .where((e) =>
+                              DateTime.parse(e.time).day == DateTime.now().day)
+                          .map(
+                            (e) => WeatherHourlyItem(
                               time: formatTimeHHmm(e.time),
                               temp: '${e.temperature.toInt()}°',
                               icon: getWeatherIconAndDescription(
-                                  e.weatherCode)['icon']))
+                                  e.weatherCode)['icon'],
+                            ),
+                          )
                           .toList(),
                     ),
                   ),
