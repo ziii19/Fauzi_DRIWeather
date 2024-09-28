@@ -21,74 +21,75 @@ class WeatherScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is WeatherSuccess) {
             return BgScaffold(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SafeArea(
-                    child: WidgetBack(),
-                  ),
-                  const SizedBox(height: 50),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Today',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                      Text(
-                        formatTimeMMMdd(state.weather.time),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 32),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: state.weatherHourly
-                          .where((e) =>
-                              DateTime.parse(e.time).day == DateTime.now().day)
-                          .map(
-                            (e) => WeatherHourlyItem(
-                              time: formatTimeHHmm(e.time),
-                              temp: '${e.temperature.toInt()}°',
-                              icon: getWeatherIconAndDescription(
-                                  e.weatherCode)['icon'],
-                            ),
-                          )
-                          .toList(),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SafeArea(
+                      child: WidgetBack(),
                     ),
-                  ),
-                  const SizedBox(height: 50),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Next Forecast',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w900,
+                    const SizedBox(height: 50),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Today',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w900,
+                          ),
                         ),
+                        Text(
+                          formatTimeMMMdd(state.weather.time),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 32),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: state.weatherHourly
+                            .where((e) =>
+                                DateTime.parse(e.time).day ==
+                                DateTime.now().day)
+                            .map(
+                              (e) => WeatherHourlyItem(
+                                time: formatTimeHHmm(e.time),
+                                temp: '${e.temperature.toInt()}°',
+                                icon: getWeatherIconAndDescription(
+                                    e.weatherCode)['icon'],
+                              ),
+                            )
+                            .toList(),
                       ),
-                      Icon(
-                        Icons.calendar_today,
-                        color: AppColor.white,
-                        size: 20,
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Expanded(
-                    child: ListView(
+                    ),
+                    const SizedBox(height: 50),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Next Forecast',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        Icon(
+                          Icons.calendar_today,
+                          color: AppColor.white,
+                          size: 20,
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Column(
                       children: state.weatherDaily
                           .map(
                             (e) => WeatherNextDayItem(
@@ -100,22 +101,22 @@ class WeatherScreen extends StatelessWidget {
                           )
                           .toList(),
                     ),
-                  ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.wb_sunny, color: Colors.white),
-                      SizedBox(width: 10),
-                      Text(
-                        'DRI Weather',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.wb_sunny, color: Colors.white),
+                        SizedBox(width: 10),
+                        Text(
+                          'DRI Weather',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             );
           } else if (state is WeatherFailed) {
