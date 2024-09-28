@@ -3,7 +3,7 @@ import 'package:fauzi_driweather/core/models/weather_model.dart';
 import 'package:http/http.dart' as http;
 
 class WeatherApi {
-  static const String _apiKey = 'YOUR_API_KEY';
+  static const String _apiKey = 'eoKot9cfxFZ44VmBMG98KJral9IuHaka';
 
   Future<WeatherModel?> getRealtimeWeather(double lat, double lon) async {
     String url =
