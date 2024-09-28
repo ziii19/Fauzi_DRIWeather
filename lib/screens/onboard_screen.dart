@@ -1,15 +1,30 @@
 import 'package:fauzi_driweather/core/constants/svg_assets.dart';
 import 'package:fauzi_driweather/core/theme/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'home_screen.dart';
 
-class OnboardPage extends StatelessWidget {
+class OnboardPage extends StatefulWidget {
   static route() => MaterialPageRoute(
         builder: (context) => const OnboardPage(),
       );
   const OnboardPage({super.key});
+
+  @override
+  State<OnboardPage> createState() => _OnboardPageState();
+}
+
+class _OnboardPageState extends State<OnboardPage> {
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+  }
 
   @override
   Widget build(BuildContext context) {
