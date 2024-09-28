@@ -8,12 +8,19 @@ import 'screens/blocs/weather/weather_bloc.dart';
 import 'screens/splash_screen.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
-    MultiBlocProvider(providers: [
-      BlocProvider(create: (context) => WeatherBloc()),
-      BlocProvider(create: (context) => LocationCubit()..getCurrentLocation()),
-      BlocProvider(create: (context) => FirstLaunchCubit()..checkFirstLaunch()),
-    ], child: const MainApp()),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => WeatherBloc()),
+        BlocProvider(
+            create: (context) => LocationCubit()..getCurrentLocation()),
+        BlocProvider(
+            create: (context) => FirstLaunchCubit()..checkFirstLaunch()),
+      ],
+      child: const MainApp(),
+    ),
   );
 }
 
