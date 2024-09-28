@@ -64,54 +64,60 @@ class _HomePageState extends State<HomePage> {
             return BgScaffold(
               child: Stack(
                 children: [
-                  Column(
-                    children: [
-                      SafeArea(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              child: GestureDetector(
-                                onTap: () => Navigator.push(
-                                  context,
-                                  MapSearchScreen.route(),
-                                ),
-                                child: Row(
-                                  children: [
-                                    SvgPicture.asset(SvgAssets.map),
-                                    const SizedBox(width: 20),
-                                    BlocBuilder<LocationCubit, LocationState>(
-                                      builder: (context, state) {
-                                        if (state is LocationSuccess) {
-                                          return Text(
-                                            state.locationName,
-                                            style: const TextStyle(
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.bold,
-                                              color: AppColor.white,
-                                            ),
-                                          );
-                                        }
-                                        return const Text(
-                                          'Surabaya',
-                                          style: TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColor.white,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                    const SizedBox(width: 10),
-                                    const Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: AppColor.white,
-                                    )
-                                  ],
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SafeArea(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () => Navigator.push(
+                                    context,
+                                    MapSearchScreen.route(),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(SvgAssets.map),
+                                      const SizedBox(width: 20),
+                                      Expanded(
+                                        child: BlocBuilder<LocationCubit,
+                                            LocationState>(
+                                          builder: (context, state) {
+                                            if (state is LocationSuccess) {
+                                              return Text(
+                                                state.locationName,
+                                                maxLines: 1,
+                                                overflow: TextOverflow
+                                                    .ellipsis, // Menambahkan ellipsis
+                                                style: const TextStyle(
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: AppColor.white,
+                                                ),
+                                              );
+                                            }
+                                            return const Text(
+                                              'Surabaya',
+                                              maxLines:
+                                                  1, // Membatasi hanya satu baris
+                                              overflow: TextOverflow
+                                                  .ellipsis, // Menambahkan ellipsis
+                                              style: TextStyle(
+                                                fontSize: 24,
+                                                fontWeight: FontWeight.bold,
+                                                color: AppColor.white,
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            IconButton(
+                              IconButton(
                                 onPressed: () {
                                   _showNotificationModal(context);
                                 },
@@ -119,152 +125,315 @@ class _HomePageState extends State<HomePage> {
                                   Icons.notifications_none_rounded,
                                   color: AppColor.white,
                                   size: 26,
-                                ))
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 50),
-                      Icon(
-                        getWeatherIconAndDescription(
-                            weather.weatherCode)['icon'],
-                        color: AppColor.white,
-                        size: 100,
-                      ),
-                      const SizedBox(height: 50),
-                      Container(
-                        width: 335,
-                        height: 335,
-                        decoration: BoxDecoration(
-                          color: Colors.blue[200],
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 10,
-                              offset: Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              formatTimeMMMdd(weather.time),
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white.withOpacity(0.9),
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              '${weather.temperature.toInt()}°',
-                              style: TextStyle(
-                                fontSize: 80,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                shadows: [
-                                  Shadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 8,
-                                    offset: const Offset(2, 4),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Text(
-                              getWeatherIconAndDescription(
-                                  weather.weatherCode)['description'],
-                              style: TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                                shadows: [
-                                  Shadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 4,
-                                    offset: const Offset(2, 2),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 32),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Column(
-                                  children: [
-                                    const Icon(Icons.air, color: Colors.white),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      'Wind',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.white.withOpacity(0.9),
-                                      ),
-                                    ),
-                                    Text(
-                                      '${convertWindSpeedToKmh(weather.windSpeed).toStringAsFixed(2)} km/h',
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
                                 ),
-                                Container(
-                                  height: 40,
-                                  width: 1,
-                                  color: Colors.white.withOpacity(0.5),
-                                ),
-                                Column(
-                                  children: [
-                                    const Icon(Icons.water_drop,
-                                        color: Colors.white),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      'Hum',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.white.withOpacity(0.9),
-                                      ),
-                                    ),
-                                    Text(
-                                      '${weather.humidity.toInt()}%',
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 50),
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const WeatherScreen()));
-                          },
-                          child: const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text('Weather Details'),
-                              SizedBox(width: 11),
-                              Icon(
-                                Icons.arrow_forward_ios_rounded,
                               )
                             ],
-                          ))
-                    ],
+                          ),
+                        ),
+                        const SizedBox(height: 50),
+                        LayoutBuilder(builder: (context, constraints) {
+                          if (constraints.maxWidth < 600) {
+                            return Column(
+                              children: [
+                                Icon(
+                                  getWeatherIconAndDescription(
+                                      weather.weatherCode)['icon'],
+                                  color: AppColor.white,
+                                  size: 100,
+                                ),
+                                const SizedBox(height: 50),
+                                Container(
+                                  width: 335,
+                                  height: 335,
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue[300],
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Colors.black26,
+                                        blurRadius: 10,
+                                        offset: Offset(0, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  padding: const EdgeInsets.all(16),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        formatTimeMMMdd(weather.time),
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white.withOpacity(0.9),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 16),
+                                      Text(
+                                        '${weather.temperature.toInt()}°',
+                                        style: TextStyle(
+                                          fontSize: 80,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                          shadows: [
+                                            Shadow(
+                                              color:
+                                                  Colors.black.withOpacity(0.2),
+                                              blurRadius: 8,
+                                              offset: const Offset(2, 4),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Text(
+                                        getWeatherIconAndDescription(
+                                            weather.weatherCode)['description'],
+                                        style: TextStyle(
+                                          fontSize: 28,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white,
+                                          shadows: [
+                                            Shadow(
+                                              color:
+                                                  Colors.black.withOpacity(0.2),
+                                              blurRadius: 4,
+                                              offset: const Offset(2, 2),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 32),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Column(
+                                            children: [
+                                              const Icon(Icons.air,
+                                                  color: Colors.white),
+                                              const SizedBox(height: 4),
+                                              Text(
+                                                'Wind',
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.white
+                                                      .withOpacity(0.9),
+                                                ),
+                                              ),
+                                              Text(
+                                                '${convertWindSpeedToKmh(weather.windSpeed).toStringAsFixed(2)} km/h',
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Container(
+                                            height: 40,
+                                            width: 1,
+                                            color:
+                                                Colors.white.withOpacity(0.5),
+                                          ),
+                                          Column(
+                                            children: [
+                                              const Icon(Icons.water_drop,
+                                                  color: Colors.white),
+                                              const SizedBox(height: 4),
+                                              Text(
+                                                'Hum',
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.white
+                                                      .withOpacity(0.9),
+                                                ),
+                                              ),
+                                              Text(
+                                                '${weather.humidity.toInt()}%',
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: Icon(
+                                    getWeatherIconAndDescription(
+                                        weather.weatherCode)['icon'],
+                                    color: AppColor.white,
+                                    size: 200,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: 335,
+                                        height: 335,
+                                        decoration: BoxDecoration(
+                                          color: Colors.blue[300],
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              color: Colors.black26,
+                                              blurRadius: 10,
+                                              offset: Offset(0, 4),
+                                            ),
+                                          ],
+                                        ),
+                                        padding: const EdgeInsets.all(16),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              formatTimeMMMdd(weather.time),
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.white
+                                                    .withOpacity(0.9),
+                                              ),
+                                            ),
+                                            const SizedBox(height: 16),
+                                            Text(
+                                              '${weather.temperature.toInt()}°',
+                                              style: TextStyle(
+                                                fontSize: 80,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                                shadows: [
+                                                  Shadow(
+                                                    color: Colors.black
+                                                        .withOpacity(0.2),
+                                                    blurRadius: 8,
+                                                    offset: const Offset(2, 4),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Text(
+                                              getWeatherIconAndDescription(
+                                                      weather.weatherCode)[
+                                                  'description'],
+                                              style: TextStyle(
+                                                fontSize: 28,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white,
+                                                shadows: [
+                                                  Shadow(
+                                                    color: Colors.black
+                                                        .withOpacity(0.2),
+                                                    blurRadius: 4,
+                                                    offset: const Offset(2, 2),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(height: 32),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Column(
+                                                  children: [
+                                                    const Icon(Icons.air,
+                                                        color: Colors.white),
+                                                    const SizedBox(height: 4),
+                                                    Text(
+                                                      'Wind',
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: Colors.white
+                                                            .withOpacity(0.9),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      '${convertWindSpeedToKmh(weather.windSpeed).toStringAsFixed(2)} km/h',
+                                                      style: const TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Container(
+                                                  height: 40,
+                                                  width: 1,
+                                                  color: Colors.white
+                                                      .withOpacity(0.5),
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    const Icon(Icons.water_drop,
+                                                        color: Colors.white),
+                                                    const SizedBox(height: 4),
+                                                    Text(
+                                                      'Hum',
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: Colors.white
+                                                            .withOpacity(0.9),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      '${weather.humidity.toInt()}%',
+                                                      style: const TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          }
+                        }),
+                        const SizedBox(height: 50),
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const WeatherScreen()));
+                            },
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text('Weather Details'),
+                                SizedBox(width: 11),
+                                Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                )
+                              ],
+                            )),
+                      ],
+                    ),
                   ),
                   if (_isBottomSheetVisible)
                     BackdropFilter(
