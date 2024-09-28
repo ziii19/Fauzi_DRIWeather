@@ -6,6 +6,7 @@ import 'package:fauzi_driweather/services/get_current_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
@@ -84,73 +85,78 @@ class MapSearchScreenState extends State<MapSearchScreen> {
           Navigator.pop(context);
         }
       },
-      child: Scaffold(
-        body: Stack(
-          children: [
-            FlutterMap(
-              mapController: _mapController,
-              options: MapOptions(
-                initialCenter: _currentLocation,
-                initialZoom: 13.0,
-                onTap: (_, latlng) => _updateLocation(latlng),
-              ),
-              children: [
-                TileLayer(
-                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          body: Stack(
+            children: [
+              FlutterMap(
+                mapController: _mapController,
+                options: MapOptions(
+                  initialCenter: _currentLocation,
+                  initialZoom: 13.0,
+                  onTap: (_, latlng) => _updateLocation(latlng),
                 ),
-                MarkerLayer(
-                  markers: [
-                    Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: _currentLocation,
-                      child: const Icon(
-                        Icons.location_pin,
-                        color: Colors.red,
-                        size: 40,
+                children: [
+                  TileLayer(
+                    urlTemplate:
+                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    tileProvider: CancellableNetworkTileProvider(),
+                  ),
+                  MarkerLayer(
+                    markers: [
+                      Marker(
+                        width: 80.0,
+                        height: 80.0,
+                        point: _currentLocation,
+                        child: const Icon(
+                          Icons.location_pin,
+                          color: Colors.red,
+                          size: 40,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+                ],
+              ),
+              SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      _buildSearchBar(),
+                      if (_suggestions.isNotEmpty) _buildSuggestionsList(),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-            SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    _buildSearchBar(),
-                    if (_suggestions.isNotEmpty) _buildSuggestionsList(),
-                  ],
+              ),
+            ],
+          ),
+          floatingActionButton: Stack(
+            children: <Widget>[
+              Positioned(
+                bottom: 80.0,
+                right: 16.0,
+                child: FloatingActionButton(
+                  heroTag: null,
+                  child: const Icon(Icons.check),
+                  onPressed: () => context.read<WeatherBloc>().add(
+                      GetRealtimWeather(
+                          lat: _currentLocation.latitude,
+                          lon: _currentLocation.longitude)),
                 ),
               ),
-            ),
-          ],
-        ),
-        floatingActionButton: Stack(
-          children: <Widget>[
-            Positioned(
-              bottom: 80.0,
-              right: 16.0,
-              child: FloatingActionButton(
-                heroTag: null,
-                child: const Icon(Icons.check),
-                onPressed: () => context.read<WeatherBloc>().add(
-                    GetRealtimWeather(
-                        lat: _currentLocation.latitude,
-                        lon: _currentLocation.longitude)),
+              Positioned(
+                bottom: 16.0,
+                right: 16.0,
+                child: FloatingActionButton(
+                  heroTag: null,
+                  child: const Icon(Icons.my_location),
+                  onPressed: () => _getCurrentLocation(),
+                ),
               ),
-            ),
-            Positioned(
-              bottom: 16.0,
-              right: 16.0,
-              child: FloatingActionButton(
-                heroTag: null,
-                child: const Icon(Icons.my_location),
-                onPressed: () => _getCurrentLocation(),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
