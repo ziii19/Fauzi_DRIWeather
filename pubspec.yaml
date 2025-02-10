@@ -1,0 +1,46 @@
+
+name: fauzi_driweather
+description: "A new Flutter project."
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^9.0.0
+  flutter_map: ^8.0.0
+  flutter_map_cancellable_tile_provider: ^3.1.0
+  flutter_svg: ^2.0.17
+  geocoding: ^3.0.0
+  geolocator: ^13.0.2
+  http: ^1.3.0
+  intl: ^0.20.2
+  latlong2: ^0.9.1
+  shared_preferences: ^2.3.2
+  weather_icons: ^3.0.0
+
+dev_dependencies:
+  flutter_lints: ^4.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/svg/
+
+  fonts:
+    - family: Overpass
+      fonts:
+        - asset: assets/fonts/Overpass-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Overpass-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Overpass-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Overpass-Black.ttf
+          weight: 900
